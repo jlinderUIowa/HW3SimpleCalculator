@@ -13,13 +13,20 @@
         int hoursOvertime = totalHoursworked - 40;
         double overtimeHourlyrate = hourlyRate * 1.5;
         double grossPay;
-        int preTaxdeduct = Integer.parseInt(request.getParameter("pretax"));
-        int postTaxdeduct = Integer.parseInt(request.getParameter("posttax"));
+        int pretaxDeduct = Integer.parseInt(request.getParameter("pretax"));
+        int posttaxDeduct = Integer.parseInt(request.getParameter("posttax"));
+        double taxPay;
         
         if (totalHoursworked <= 40) {grossPay = totalHoursworked * hourlyRate;}
         else {grossPay = (totalHoursworked * (1.5 * hourlyRate));}
         
-        double pretaxPay = grossPay - preTaxdeduct;
+        double pretaxPay = grossPay - pretaxDeduct;
+        
+        if (grossPay < 500) {taxPay = grossPay * .18;}
+        else {taxPay = grossPay * .22;}
+        
+        double posttaxPay = pretaxPay - taxPay;
+        double netPay = posttaxPay - posttaxDeduct;
         
     %>
     <body>
@@ -33,12 +40,12 @@
               <tr><td># Hours Overtime:</td><td><%= hoursOvertime %></td></tr>
               <tr><td>Overtime Hourly Rate:</td><td><%= overtimeHourlyrate %></td></tr>
               <tr><td>Gross Pay:</td><td><%= grossPay %></td></tr>
-              <tr><td>Pre-tax Deduct:</td><td><%= preTaxdeduct %></td></tr>
-            <tr><td>Pre-tax Pay:</td></tr>
-            <tr><td>Tax Amount:</td></tr>
-            <tr><td>Post-tax Pay:</td></tr>
-            <tr><td>Post-tax Deduct:</td><td><%= postTaxdeduct %></td></tr>
-            <tr><td>Net Pay:</td></tr>  
+              <tr><td>Pre-tax Deduct:</td><td><%= pretaxDeduct %></td></tr>
+              <tr><td>Pre-tax Pay:</td><td><%= pretaxPay %></td></tr>
+              <tr><td>Tax Amount:</td><td><%= taxPay %></td></tr>
+              <tr><td>Post-tax Pay:</td><td><%= posttaxPay %></td></tr>
+              <tr><td>Post-tax Deduct:</td><td><%= posttaxDeduct %></td></tr>
+              <tr><td>Net Pay:</td><td><%= netPay %></td></tr>  
           </tbody>
         </table> 
             <a href="http://msci3300-s1608.cloudapp.net:8080//">Back</a>
