@@ -18,7 +18,7 @@
         double taxPay;
         
         if (totalHoursworked <= 40) {grossPay = totalHoursworked * hourlyRate;}
-        else {grossPay = (totalHoursworked * (1.5 * hourlyRate));}
+        else {grossPay = ((totalHoursworked-hoursOvertime) * hourlyRate + hoursOvertime * overtimeHourlyrate);} 
         
         double pretaxPay = grossPay - pretaxDeduct;
         
